@@ -23,28 +23,56 @@ namespace NumberGuesser
             string inputName = Console.ReadLine();
             Console.WriteLine("Hello {0}, lets play...", inputName);
 
-            int correctNumber = 8;
-            int guess = 0;
+            while (true) {
 
-            Console.WriteLine("Guess a number between 1 and 10");
+                Random random = new Random();
+                int correctNumber = random.Next(1, 10);
 
-            while(guess != correctNumber)
-            {
-                string input = Console.ReadLine();
-                guess = Int32.Parse(input);
+                int guess = 0;
 
-                if(guess != correctNumber)
+                Console.WriteLine("Guess a number between 1 and 10");
+
+                while (guess != correctNumber)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Sorry that's not quite right, guess again");
-                    Console.ResetColor();
+                    string input = Console.ReadLine();
+                    if (!int.TryParse(input, out guess))
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Yikes, that wasn't a number!");
+                        Console.ResetColor();
+                        continue;
+                    }
+                    guess = Int32.Parse(input);
+
+                    if (guess != correctNumber)
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine("Sorry that's not quite right, guess again");
+                        Console.ResetColor();
+                    }
+                }
+
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("That's right, finally!");
+                Console.ResetColor();
+
+
+                Console.WriteLine("Do you want to keep playing? [Y or N]");
+                string answer = Console.ReadLine().ToUpper();
+
+                if(answer == "Y")
+                {
+                    continue;
+
+                } else if (answer == "N")
+                {
+                    return;
+                }
+                else
+                {
+                    return;
                 }
             }
-
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.WriteLine("That's right, finally!");
-            Console.ResetColor();
-
         }
     }
 }
